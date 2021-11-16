@@ -1,0 +1,198 @@
+.conversation-container {
+    padding: 1rem;
+    position: relative;
+    max-height: 100vh;
+    overflow-y: hidden;
+
+    .conversation {
+        max-width: 1000px;
+        margin: 0 auto;
+        position: relative;
+
+        .head {
+            position: sticky;
+            height: 75px;
+            padding: 1rem;
+            background: $dark-2;
+            border-radius: $card-border-radius;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            color: $white !important;
+
+            .chat-details {
+                display: flex;
+                align-items: center;
+                width: 100%;
+                overflow: hidden;
+
+                .avatar {
+                    min-width: 40px !important;
+                    height: 40px !important;
+                    border-radius: 50%;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                }
+
+                .two-tier {
+                    display: flex;
+                    flex-direction: column;
+                    margin-left: 10px;
+                    width: 100%;
+                    overflow: hidden;
+
+                    .user-count {
+                        opacity: .75;
+                        font-size: .75rem;
+                    }
+
+                    .name {
+                        padding-right: 10px;
+                        text-overflow: ellipsis;
+                        white-space: nowrap;
+                        overflow: hidden;
+                    }
+                }
+            }
+
+            .options {
+                display: flex;
+                align-items: center;
+
+                button {
+                    width: 30px;
+                    height: 30px;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    background: none !important;
+                    border: none !important;
+                    font-size: 1.25rem;
+                    margin-bottom: 0rem !important;
+
+                    &:first-of-type {
+                        margin-right: 10px !important;
+                    }
+
+                    &:last-of-type {
+                        margin-right: 0rem !important;
+                    }
+                }
+            }
+        }
+
+        .message-feed {
+            position: relative;
+            height: calc(100vh - 75px - 90px - 2rem) !important;
+            overflow-y: scroll;
+            flex-direction: column-reverse;
+            display: flex;
+
+
+            .message-container {
+                display: flex;
+                &.message-sent {
+                    justify-content: flex-end;
+                    .message {
+                        background: $primary-2 !important;
+                    }
+                }
+
+                &.message-received {
+                    justify-content: flex-start;
+                    .message {
+                        background: $grey-2 !important;
+                    }
+                }
+
+                .message {
+                    color: $white !important;
+                    display: flex;
+                    padding: 1rem;
+                    border-radius: $card-border-radius;
+                    max-width: 400px;
+                    margin-bottom: .5rem;
+                    margin-top: 0rem;
+
+                    &:first-of-type {
+                        margin-top: .5rem;
+                    }
+    
+                    .avatar {
+                        min-width: 40px !important;
+                        height: 40px !important;
+                        border-radius: 50%;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                    }
+    
+                    .content-container {
+                        margin-left: 10px;
+    
+                        .message-header {
+                            display: flex;
+                            align-items: center;
+                            justify-content: space-between;
+    
+                            .two-tier {
+                                display: flex;
+                                flex-direction: column;
+    
+                                .idCode {
+                                    font-size: .75rem;
+                                    margin-bottom: -5px;
+                                }
+    
+                                .name {}
+                            }
+    
+                            .sent-time {
+                                font-size: .75rem;
+                            }
+                        }
+    
+                        .content {
+                            p {
+                                margin-bottom: 0rem !important;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        .input-section {
+            padding: 1rem;
+            height: 90px;
+            background: $dark-2;
+            border-radius: $card-border-radius;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            color: $white !important;
+
+            textarea {
+                width: 100%;
+                padding: .25rem !important;
+            }
+
+            .button-container {
+                margin-left: 1rem;
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 985px) {
+    .conversation-container {
+        margin-top: calc(1rem + 40px);
+        min-height: calc(100vh - 1rem - 40px);
+
+        .message-feed {
+            position: relative;
+            height: calc(100vh - 75px - 90px - 2rem - 1rem - 40px) !important;
+        }
+    }
+}

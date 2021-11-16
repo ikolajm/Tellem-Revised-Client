@@ -1,0 +1,384 @@
+// Modal Override
+.modal-content {
+    background: $dark;
+    color: $white;
+    padding: 1rem;
+
+    .modal-header {
+        border-bottom: none !important;
+        padding: 0rem !important;
+        margin-bottom: .5rem;
+
+        h1 {
+            font-size: 1.5rem !important;
+            margin: 0;
+        }
+
+        .two-tier {
+            h1 {
+                font-size: 1.25rem !important;
+                margin: 0;
+            }
+    
+            span {
+                font-size: 1rem;
+                opacity: .75;
+            }
+        }
+    }
+
+    .modal-body {
+        .friends-list, .search-results, .unfriend-preview, .user {
+            padding: 1rem;
+            margin-bottom: .5rem;
+            border-radius: $card-border-radius;
+            background: $dark-2;
+        }
+        
+        .friends-list, .search-results {
+            max-height: 200px;
+            overflow-y: scroll;
+        }
+        padding: 0rem !important;
+        // Title
+        h1 {
+            font-size: 1.5rem;
+        }
+        // General paragraph
+        p {
+            margin-bottom: 0rem !important;
+        }
+        // User search
+        .search {
+            display: flex;
+            align-items: center;
+            margin-bottom: .5rem;
+            input {
+                background: $dark-2 !important;
+                color: $white !important;
+                width: 100%;
+            }
+
+            button {
+                margin-bottom: 0rem !important;
+                margin-right: 0rem !important;
+                margin-left: 10px !important;
+                height: 30px;
+                display: flex;
+                justify-content: center;
+            }
+        }
+        // Friends filter
+        .filter {
+            margin-bottom: .5rem;
+            input {
+                background: $dark-2 !important;
+                color: $white !important;
+                width: 100%;
+            }
+        }
+        // General inputs
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: .5rem;
+
+            label {
+                margin-bottom: .25rem;
+            }
+
+            input {
+                background: $dark-2 !important;
+                color: $white !important;
+                width: 100%;
+            }
+        }
+        // User Identifier 
+        .selectable {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            color: $white !important;
+            margin-bottom: .5rem;
+
+            &:last-of-type {
+                margin-bottom: 0rem;
+            }
+        }
+        .identifier, .details {
+            display: flex;
+            align-items: center;
+            min-width: 30%;
+            padding-right: 10px;
+
+            .avatar {
+                min-width: 40px !important;
+                height: 40px !important;
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            .two-tier {
+                display: flex;
+                flex-direction: column;
+                margin-left: 10px;
+                .idCode {
+                    opacity: .75;
+                    font-size: .75rem;
+                }
+                .name {
+                    width: 100%;
+                    text-overflow: ellipsis;
+                    white-space: nowrap;
+                    overflow: hidden;
+                }
+            }
+            
+        }
+        
+        .details {
+            border-radius: $card-border-radius;
+            background: $dark-2;
+            color: $white !important;
+            padding: 1rem;
+            margin-bottom: .5rem;
+        }
+
+        // Custom checkbox
+        .select {
+            display: block;
+            position: relative;
+            padding-left: 35px;
+            margin-bottom: 12px;
+            cursor: pointer;
+            font-size: 22px;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+
+            &:hover {
+                .checkmark {
+                    background-color: $white-2;
+                }
+            }
+
+            input {
+                position: absolute;
+                opacity: 0;
+                cursor: pointer;
+                height: 0;
+                width: 0;
+            }
+
+            input:checked ~ .checkmark {
+                i {
+                    display: block;
+                }
+            }
+
+            .checkmark {
+                position: absolute;
+                top: 0;
+                left: 0;
+                height: 25px;
+                width: 25px;
+                background-color: $white;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                padding: 1rem;
+
+                i {
+                    display: none;
+                    color: $primary !important;
+                }
+            }
+        }
+
+        // Not found
+        .not-found {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+
+            i {
+                font-size: 2rem;
+                margin-bottom: .5rem;
+            }
+        }
+
+        // Add friend button
+        .add-friend {
+            border: none !important;
+            background: $success !important;
+            height: 30px !important;
+            margin-right: 0rem !important;
+            margin-bottom: 0rem !important;
+
+            &:hover, &:focus {
+                background: $success-2 !important;
+            }
+        }
+
+        .message {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 1rem;
+
+            label {
+                margin-bottom: .25rem;
+            }
+
+            textarea {
+                background: $dark-2 !important;
+                color: $white !important;
+                padding: .5rem;
+            }
+        }
+
+        // Preferred background selector
+        .preferredBackground {
+            width: 100%;
+            margin-bottom: 1rem;
+            max-width: 150px;
+            .color-row {
+                margin-top: .5rem;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                width: 100%;
+
+                &:last-of-type {
+                    // margin-bottom: 1rem;
+                }
+
+                .color-option {
+                    width: 30px;
+                    height: 30px;
+                    cursor: pointer;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    transition: .3s;
+
+                    &:hover {
+                        filter: brightness(85%);
+                    }
+
+                    i {
+                        display: none;
+                    }
+
+                    &.selected {
+                        // filter: brightness((85%));
+                        i {
+                            // filter: brightness(100%);
+                            display: block;
+                        }
+                    }
+                }
+
+                .red {
+                    background: red;
+                }
+
+                .blue {
+                    background: blue;
+                }
+
+                .green {
+                    background: green;
+                }
+
+                .orange {
+                    background: orange;
+                }
+
+                .darkslategrey {
+                    background: darkslategrey;
+                }
+
+                .purple {
+                    background: purple;
+                }
+
+                .pink {
+                    background: pink;
+                }
+
+                .brown {
+                    background: brown;
+                }
+            }
+        }
+
+        // Selected users to add to chat
+        .selected-users {
+            display: flex;
+            flex-wrap: wrap;
+            margin-bottom: .5rem;
+
+            .added-user, .selected-user {
+                background: $dark-2;
+                margin-right: 10px;
+                padding: .25rem;
+                border-radius: $card-border-radius;
+                margin-bottom: 10px;
+                .two-tier {
+                    flex-direction: row-reverse;
+                    align-items: center;
+
+                    .idCode {
+                        margin-left: 5px;
+                    }
+                }
+            }
+
+            .selected-user {
+                background: $primary !important;
+            }
+        }
+    }
+    
+    .modal-footer {
+        border: none !important;
+        padding: 0rem !important;
+        justify-content: space-between !important;
+        margin-top: .5rem;
+
+        button {
+            margin-bottom: 0rem !important;
+            margin-right: 0rem !important;
+        }
+
+        .cancel, .dismiss {
+            background: $grey !important;
+            border: none !important;
+
+            &:hover, &:focus {
+                background: $grey-2 !important;
+            } 
+        }
+
+        .success, .save, .send-message, .save-password {
+            border: none !important;
+            background: $success !important;
+
+            &:hover, &:focus {
+                background: $success-2 !important;
+            }
+        }
+
+        .unfriend {
+            background: $error !important;
+            border: none !important;
+
+            &:hover, &:focus {
+                background: $error-2 !important;
+            }
+        }
+    }
+}

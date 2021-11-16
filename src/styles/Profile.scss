@@ -1,0 +1,195 @@
+.profile-container {
+    padding: 1rem;
+
+    .profile {
+        max-width: 1000px;
+        margin: 0 auto;
+        color: $white !important;
+
+        .head {
+            h1 {
+                font-size: 1.5rem;
+            }
+        }
+
+        .profile-preview {
+            padding: 1rem;
+            background: $dark-2;
+            border-radius: $card-border-radius;
+            max-width: 300px;
+            margin-bottom: 1rem;
+
+            .identifier {
+                display: flex;
+                align-items: center;
+
+                .avatar {
+                    min-width: 40px !important;
+                    height: 40px !important;
+                    border-radius: 50%;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                }
+
+                .two-tier {
+                    display: flex;
+                    flex-direction: column;
+                    margin-left: 10px;
+                    
+                    .idCode {
+                        opacity: .75;
+                        font-size: .75rem;
+                    }
+                    .name {
+                        width: 100%;
+                        text-overflow: ellipsis;
+                        white-space: nowrap;
+                        overflow: hidden;
+                    }
+                }
+            }
+        }
+
+        .profile-edit {
+            padding: 1rem;
+            background: $dark-2;
+            border-radius: $card-border-radius;
+            max-width: 500px;
+            margin-bottom: 1rem;
+
+            .head {
+                h1 {
+
+                }
+            }
+
+            .inputs {
+                .inline-field {
+                    display: flex;
+                    justify-content: space-between;
+                }
+
+                .input-group {
+                    display: flex;
+                    flex-direction: column;
+                    align-items: flex-start;
+                    margin-bottom: .5rem;
+
+                    input {
+                        width: 100%;
+                    }
+                }
+            }
+
+            .preferred-background {
+                width: 100%;
+                margin-bottom: 1rem;
+                max-width: 150px;
+                .color-row {
+                    margin-top: .5rem;
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-between;
+                    width: 100%;
+    
+                    &:last-of-type {
+                        // margin-bottom: 1rem;
+                    }
+    
+                    .color-option {
+                        width: 30px;
+                        height: 30px;
+                        cursor: pointer;
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        transition: .3s;
+    
+                        &:hover {
+                            filter: brightness(85%);
+                        }
+    
+                        i {
+                            display: none;
+                        }
+    
+                        &.selected {
+                            // filter: brightness((85%));
+                            i {
+                                // filter: brightness(100%);
+                                display: block;
+                            }
+                        }
+                    }
+    
+                    .red {
+                        background: red;
+                    }
+    
+                    .blue {
+                        background: blue;
+                    }
+    
+                    .green {
+                        background: green;
+                    }
+    
+                    .orange {
+                        background: orange;
+                    }
+    
+                    .darkslategrey {
+                        background: darkslategrey;
+                    }
+    
+                    .purple {
+                        background: purple;
+                    }
+    
+                    .pink {
+                        background: pink;
+                    }
+    
+                    .brown {
+                        background: brown;
+                    }
+                }
+            }
+    
+            .edit-password {
+                margin-right: 0rem !important;
+                display: flex;
+                justify-content: flex-end;
+            }
+        }
+
+        .save-prompt {
+            padding: 1rem;
+            border-radius: $card-border-radius;
+            background: $dark-2;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            max-width: 500px;
+
+            button {
+                background: $success !important;
+                border: none !important;
+
+                &:hover {
+                    background: $success-2 !important;
+                }
+            }
+        }
+
+    }
+}
+
+
+@media screen and (max-width: 985px) {
+    .profile-container {
+        margin-top: calc(1rem + 40px);
+        min-height: calc(100vh - 1rem - 40px);
+    }
+}

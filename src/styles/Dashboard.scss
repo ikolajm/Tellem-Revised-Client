@@ -1,0 +1,168 @@
+.dashboard-container {
+    background: $dark;
+    width: 100%;
+    max-width: 100vw;
+    overflow-x: hidden !important;
+    min-height: 100vh;
+    height: 100%;
+
+    .dashboard-texture {
+        background: url("../assets/gplay.png");
+        position: absolute;
+        top: 0;
+        left: 0;
+        opacity: .25;
+        height: 100vh;
+        width: 100%;
+    }
+
+    nav {
+        box-sizing: border-box;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-between;
+        min-height: 100vh;
+        height: 100vh;
+        max-height: 100vh;
+        width: 100px;
+        background: $dark-2;
+        z-index: 2;
+        position: fixed;
+        padding: .5rem;
+        transition: .3s;
+        margin-left: 0px;
+
+        &.show {
+            margin-left: 0px !important;
+        }
+
+        .toggler {
+            display: none;
+            position: absolute;
+            top: 10px;
+            left: 110px;    
+            // background: none;
+            padding: 0;
+            border: none !important;
+            font-size: 1rem !important;
+            background: none !important;
+            padding: 5px;
+            opacity: .75;
+            transition: .3s;
+        }
+
+        .nav-icon {
+            cursor: pointer;
+            width: 40px;
+            height: 40px;
+            border-radius: $card-border-radius;
+            color: $white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0 auto;
+            margin-bottom: 1rem;
+            text-decoration: none;
+
+            &:hover i {
+                color: $white-1;
+            }
+
+            &.active i {
+                color: $primary !important;
+            }
+
+            i {
+                font-size: 1.5rem;
+                transition: .3s;
+            }
+
+        }
+
+        button {
+            &.nav-icon {
+                cursor: pointer;
+                width: 40px;
+                height: 40px;
+                border-radius: $card-border-radius;
+                color: $white;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                margin: 0 auto;
+                margin-bottom: 1rem;
+                text-decoration: none;
+                background: none !important;
+                border: none !important;
+                margin: 0 auto !important;
+                margin-bottom: .5rem !important;
+
+                &:hover i {
+                    color: $white-1;
+                }
+
+                &.active i {
+                    color: $primary !important;
+                }
+
+                i {
+                    font-size: 1.5rem;
+                    transition: .3s;
+                }
+            }
+        }
+        
+        & .logout {
+            &:hover i {
+                color: $error;
+            }
+        }
+
+        h1 {
+            text-align: center;
+            margin-top: 1rem;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            color: $white !important;
+            font-size: 1.25rem;
+        }
+    }
+
+    .dashboard-content {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: calc(100vw - 100px);
+        overflow-x: hidden !important;
+        margin-left: 100px;
+        transition: .3s;
+
+        &.full-screen {
+            width: 100vw;
+            margin-left: 0px;
+        }
+    }
+}
+
+@media screen and (max-width: 985px) {
+    nav {
+        margin-left: -100px !important;
+        .toggler {
+            display: block !important;
+
+            &:hover {
+                opacity: 1;
+            }
+        }
+    }
+
+    .dashboard-content {
+        width: 100vw !important;
+        margin-left: 0px !important;
+
+        .dashboard-preview {
+            width: 100vw !important;
+        }
+    }
+}

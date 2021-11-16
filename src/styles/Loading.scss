@@ -1,0 +1,21 @@
+.loading-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: $white;
+
+    .spinner-border {
+        border: 5px solid $primary;
+        border-top: 5px solid transparent;
+        border-radius: 50%;
+        height: 30px;
+        width: 30px;
+        margin-bottom: 1rem;
+    }
+
+    h1 {
+        font-size: 1rem;
+        margin-bottom: 0rem !important;
+    }
+}

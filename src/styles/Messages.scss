@@ -1,0 +1,210 @@
+.messages-container {
+    padding: 1rem;
+
+    .messages {
+        max-width: 1000px;
+        margin: 0 auto;
+        .head {
+            ul {
+                display: flex;
+                align-items: center;
+                list-style: none;
+                padding-left: 0rem;
+
+                li {
+                    margin-right: 10px;
+                    cursor: pointer;
+                    transition: .3s;
+                    color: $white;
+
+                    &.active, &:hover {
+                        color: $primary !important;
+                    }
+                }
+
+                button {
+                    margin: 0 !important;
+                    padding: .25rem .5rem !important;
+                    font-size: .9rem;
+                    background: $success !important;
+                    border: none !important;
+
+                    &:hover {
+                        background: $success-2 !important;
+                    }
+                }
+            }
+        }
+
+        .message-list {
+            padding: 1rem;
+            background: $dark-2;
+            border-radius: $card-border-radius;
+            .conversations {
+                .empty-messages {
+                    color: $white !important;
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    justify-content: center;
+                    max-width: 500px;
+                    margin: 0 auto;
+
+                    i {
+                        font-size: 3rem;
+                        margin-bottom: .5rem;
+                    }
+
+                    h1 {
+                        font-size: 1.5rem;
+                        margin-bottom: .5rem !important;
+                    }
+
+                    p {
+                        margin-bottom: 0rem !important;
+                        text-align: center;
+                    }
+                }
+
+                .labels {
+                    padding-left: 0rem !important;
+                    color: $white !important;
+                    list-style: none;
+                    display: flex;
+                    position: relative;
+                    width: 100%;
+                    padding-bottom: .25rem;
+                    border-bottom: 1px solid $white;
+
+                    .username {
+                        min-width: 30%;
+                        padding-right: 10px;
+                    }
+
+                    .preview {
+                        min-width: 50%;
+                        padding-right: 10px;
+                    }
+
+                    .action {
+                        min-width: 20%
+                    }
+                }
+
+                .conversation {
+                    display: flex;
+                    align-items: center;
+                    color: $white !important;
+                    margin-bottom: .5rem;
+
+                    &:last-of-type {
+                        margin-bottom: 0rem;
+                    }
+
+                    .identifier {
+                        display: flex;
+                        align-items: center;
+                        min-width: 30%;
+                        padding-right: 10px;
+
+                        .avatar {
+                            min-width: 40px !important;
+                            height: 40px !important;
+                            border-radius: 50%;
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                        }
+                        
+                        .name {
+                            width: 100%;
+                            margin-left: 10px;
+                            text-overflow: ellipsis;
+                            white-space: nowrap;
+                            overflow: hidden;
+                        }
+                    }
+
+                    .message-preview {
+                        font-style: italic;
+                        width: 50%;
+                        padding-right: 10px;
+                        text-overflow: ellipsis;
+                        white-space: nowrap;
+                        overflow: hidden;
+                    }
+
+                    .action-buttons {
+                        width: 20%;
+                        display: flex;
+                        align-items: center;
+                        justify-content: flex-end;
+
+                        a {
+                            text-decoration: none !important;
+                        }
+
+                        button {
+                            width: 30px;
+                            height: 30px;
+                            display: flex;
+                            justify-content: center;
+                            align-items: center;
+                            margin-bottom: 0rem !important;
+                            border: none !important;
+
+                            &:first-of-type {
+                                margin-right: 10px !important;
+                            }
+
+                            &.archive, &.unarchive {
+                                background: $grey !important;
+
+                                &:hover, &:focus {
+                                    background: $grey-2 !important;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 985px) {
+    .messages-container {
+        margin-top: calc(1rem + 40px);
+        min-height: calc(100vh - 1rem - 40px);
+    }
+}
+
+@media screen and (max-width: 650px) {
+    .labels {
+        .username {
+            min-width: 60% !important;
+            padding-right: 10px;
+        }
+
+        .preview {
+            display: none;
+        }
+
+        .action {
+            min-width: 40% !important;
+        }
+    }
+    .conversation {
+        .identifier {
+            min-width: 60% !important;
+        }
+
+        .message-preview {
+            display: none;
+        }
+
+        .action-buttons {
+            min-width: 40% !important;
+        }
+    }
+}

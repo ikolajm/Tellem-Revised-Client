@@ -1,0 +1,174 @@
+/* Colors */
+// Primary
+$primary-1: darken(#DA99E2, 30%);
+$primary-2: darken(#DA99E2, 15%);
+$primary: #DA99E2;
+$primary-3: lighten(#DA99E2, 15%);
+$primary-4: lighten(#DA99E2, 30%);
+
+// Secondary (links)
+$secondary-1: darken(#EEAB79, 30%);
+$secondary-2: darken(#EEAB79, 15%);
+$secondary: #EEAB79;
+$secondary-3: lighten(#EEAB79, 15%);
+$secondary-4: lighten(#EEAB79, 30%);
+
+// White (accents, hairlines, subtle backgrounds)
+$white-1: darken(#ECF1F4, 30%);
+$white-2: darken(#ECF1F4, 15%);
+$white: #ECF1F4;
+$white-3: lighten(#ECF1F4, 15%);
+$white-4: lighten(#ECF1F4, 30%);
+
+// Grey (helper, deemphasized)
+$grey-1: darken(#8C8CA1, 30%);
+$grey-2: darken(#8C8CA1, 15%);
+$grey: #8C8CA1;
+$grey-3: lighten(#8C8CA1, 15%);
+$grey-4: lighten(#8C8CA1, 30%);
+
+// Dark (body, backgrounds)
+$dark-1: darken(#4A4A68, 30%);
+$dark-2: darken(#4A4A68, 15%);
+$dark: #4A4A68;
+$dark-3: lighten(#4A4A68, 15%);
+$dark-4: lighten(#4A4A68, 30%);
+
+// Success
+$success-1: darken(#31D0AA, 30%);
+$success-2: darken(#31D0AA, 15%);
+$success: #31D0AA;
+$success-3: lighten(#31D0AA, 15%);
+$success-4: lighten(#31D0AA, 30%);
+
+// Fail
+$error-1: darken(#ED4B9E, 30%);
+$error-2: darken(#ED4B9E, 15%);
+$error: #ED4B9E;
+$error-3: lighten(#ED4B9E, 15%);
+$error-4: lighten(#ED4B9E, 30%);
+
+// Deep purple (Dialogs/Aletts
+$deep-purple-1: darken(#280E2C, 30%);
+$deep-purple-2: darken(#280E2C, 15%);
+$deep-purple: #280E2C;
+$deep-purple-3: lighten(#280E2C, 15%);
+$deep-purple-4: lighten(#280E2C, 30%);
+
+/* Shapes */
+$card-border-radius: 5px;
+
+/* Fonts */
+$font: 'Roboto Condensed', sans-serif;
+
+/* Box Shadows */
+$box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+
+body {
+    margin: 0 auto;
+    font-family: $font
+}
+
+button {
+    background: $primary !important;
+    display: block;
+    padding:0.35em 1.2em !important;
+    border: 0.1em solid $primary !important;
+    margin: 0 0.3em 0.3em 0 !important;
+    border-radius: $card-border-radius;
+    box-sizing: border-box !important;
+    text-decoration:none !important;
+    color:$white !important;
+    text-align:center !important;
+    transition: all 0.3s;    
+}
+
+button:hover,
+button:focus,
+button:focus-visible {
+    color:$white-2 !important;
+    background:$primary-2 !important;
+    border: 0.1em solid $primary-2 !important;
+    cursor: pointer !important;
+    outline: none !important;
+    box-shadow: none !important;
+}
+
+input, textarea {
+    border: 3px solid transparent !important;
+    border-radius: $card-border-radius !important;
+    // border-color:rgb(218 153 226) !important;
+}
+
+input:focus, textarea:focus {
+    // border: 2px solid;
+    border-color:rgb(218 153 226) !important;
+    // box-shadow: 0px 0px 4px 0px rgb(218 153 226) !important;
+    outline: none !important;
+    box-shadow: none !important;
+}
+
+
+
+// Toastify override
+.Toastify__toast--success {
+    color: $white !important;
+    background: $success !important;
+}
+
+.Toastify__toast--error {
+    color: $white !important;
+    background: $error !important
+}
+
+.Toastify__toast-icon svg {
+    fill: $white !important;
+}
+
+.Toastify__close-button svg {
+    color: $white !important;
+}
+
+.Toastify__close-button:hover {
+    background: none;
+    outline: none;
+    border: none;
+}
+
+.Toastify__close-button:hover svg {
+    opacity: 1
+}
+
+::-webkit-scrollbar-track
+{
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+    box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+	border-radius: 10px;
+	background-color: transparent;
+}
+
+::-webkit-scrollbar
+{
+	width: 12px;
+	background-color: transparent !important;
+}
+
+::-webkit-scrollbar-thumb
+{
+	border-radius: 10px;
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+    box-shadow: inset 0 0 6px rgba(0,0,0,0.3);;
+	background-color: $dark-2;
+}
+
+// Imports
+@import "./Forms.scss";
+@import "./Authentication.scss";
+@import "./Dashboard.scss";
+@import "./Messages.scss";
+@import "./Conversation.scss";
+@import "./Friends.scss";
+@import "./Profile.scss";
+@import "./404.scss";
+@import "./Loading";
+@import "./Modals";
