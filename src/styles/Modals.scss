@@ -137,6 +137,18 @@
             }
             
         }
+
+        .cancel, .dismiss, .waiting, .accepted {
+            background: $grey !important;
+            border: none !important;
+            height: 30px !important;
+            margin-right: 0rem !important;
+            margin-bottom: 0rem !important;
+    
+            &:hover, &:focus {
+                background: $grey-2 !important;
+            } 
+        }
         
         .details {
             border-radius: $card-border-radius;
@@ -354,7 +366,7 @@
             margin-right: 0rem !important;
         }
 
-        .cancel, .dismiss {
+        .cancel, .dismiss, .waiting {
             background: $grey !important;
             border: none !important;
 

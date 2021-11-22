@@ -2,8 +2,10 @@ import getPreferredColor from '../../../helpers/dashboard/getColor';
 import { Modal, Button } from 'react-bootstrap';
 import { Fragment } from 'react';
 import AuthInput from '../../../reusable_components/form/Auth_Input';
+import editPassword from "../../../helpers/dashboard/profile/editPassword";
 
 interface IncomingProps {
+    CurrentUser: any,
     show: boolean,
     handleClose: any,
     password: string,
@@ -14,7 +16,7 @@ interface IncomingProps {
     setConfirmNewPassword: any
 }
 
-const CreateConversationModal: React.FC<IncomingProps> = ({show, handleClose, password, newPassword, confirmNewPassword, setPassword, setNewPassword, setConfirmNewPassword}) => {
+const CreateConversationModal: React.FC<IncomingProps> = ({CurrentUser, show, handleClose, password, newPassword, confirmNewPassword, setPassword, setNewPassword, setConfirmNewPassword}) => {
     return (
         <Fragment>
             <Modal
@@ -59,7 +61,7 @@ const CreateConversationModal: React.FC<IncomingProps> = ({show, handleClose, pa
                 <Button className="cancel" onClick={handleClose}>
                     Cancel
                 </Button>
-                <Button className="save-password">Save Changes</Button>
+                <Button className="save-password" onClick={() => editPassword(CurrentUser, password, newPassword, confirmNewPassword)}>Save Changes</Button>
                 </Modal.Footer>
             </Modal>
         </Fragment>

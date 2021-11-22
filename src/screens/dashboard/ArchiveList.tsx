@@ -1,19 +1,38 @@
-import {useState, Fragment, useContext} from 'react'
+import {useState, Fragment, useContext, useEffect} from 'react'
 import { Link } from 'react-router-dom';
 import Loading from "./Loading";
 import data from '../../helpers/data/data'
 import getPreferredColor from '../../helpers/dashboard/getColor';
 import UserContext from '../../context/userContext';
+import getArchive from '../../helpers/dashboard/messages/getArchive';
+import unarchiveChat from '../../helpers/dashboard/messages/unarchiveChat';
 
 export default () => {
     const [loader, setLoader] = useState(true);
     const CurrentUser = useContext(UserContext);
-    const conversations = data.conversationList;
+    const [conversations, setConversations] = useState([]);
     // const conversations: any = [];
 
-    setTimeout(() => {
-        setLoader(false);
-    }, 1000)
+    useEffect(() => {
+        const archive = async () => {
+            let request = await getArchive(CurrentUser);
+            setConversations(request);
+            setLoader(false);
+        }
+
+        archive()
+    }, [])
+
+    const handleUnarchive = async (chatId:number) => {
+        let query = await unarchiveChat(CurrentUser, chatId);
+        if (query === "SUCCESS") {
+            let arr =  [...conversations];
+            arr = arr.filter((convo: any) =>  {
+                return convo.id !== chatId
+            })
+            setConversations(arr);
+        }
+    }
 
     return (
         <div className="message-list">
@@ -40,9 +59,9 @@ export default () => {
                                                     <div key={index} className="conversation">
                                                         {/* Avatar and name */}
                                                         <div className="identifier">
-                                                            <div style={getPreferredColor(convo.preferredColor)} className="avatar">
+                                                            <div style={getPreferredColor(convo.backgroundColor)} className="avatar">
                                                                 {
-                                                                    convo.type === 'group' ?
+                                                                    convo.users.length > 2 ?
                                                                         <i className="fas fa-users"></i> :
                                                                         <i className="fas fa-user"></i>
                                                                 }
@@ -51,28 +70,32 @@ export default () => {
                                                                 convo.name !== '' ?
                                                                     <span className="name">{convo.name}</span> :
                                                                     <span className="name">
-                                                                        {convo.messages[convo.messages.length - 1].author.username}
+                                                                        {convo.messages[0].user.uuid === CurrentUser?.uuid ?
+                                                                            convo.users.filter((user: any) => {
+                                                                                return user.uuid !== CurrentUser?.uuid
+                                                                            })[0].username : convo.messages[0].user.username
+                                                                        }
                                                                     </span>
                                                             }
                                                         </div>
                                                         {/* Message preview */}
                                                         <div className="message-preview">
                                                             {
-                                                                convo.messages[convo.messages.length - 1].author.uuid === CurrentUser?.uuid ?
+                                                                convo.messages[0].user.uuid === CurrentUser?.uuid ?
                                                                     <span>You: </span> : ''
                                                             }
                                                             <span>
-                                                                {convo.messages[convo.messages.length - 1].content}
+                                                                {convo.messages[0].content}
                                                             </span>
                                                         </div>
                                                         {/* Action buttons */}
                                                         <div className="action-buttons">
-                                                            {/* <Link to={"/dashboard/messages/" + convo.uuid.toString()} className="reply">
+                                                            <Link to={"/dashboard/messages/" + convo.id.toString()} className="reply">
                                                                 <button>
                                                                     <i className="fas fa-reply"></i>
                                                                 </button>
-                                                            </Link> */}
-                                                            <button className="unarchive">
+                                                            </Link>
+                                                            <button onClick={() => handleUnarchive(convo.id)} className="unarchive">
                                                                 <i className="fas fa-box-open"></i>
                                                             </button>
                                                         </div>

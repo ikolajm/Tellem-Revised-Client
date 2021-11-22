@@ -1,22 +1,36 @@
-import { Fragment, useState } from "react"
+import { Fragment, useState, useContext } from "react"
 import { Modal, Button } from "react-bootstrap"
 import getPreferredColor from '../../../helpers/dashboard/getColor';
 import data from '../../../helpers/data/data';
+import unfriendUser from "../../../helpers/dashboard/friends/unfriendUser";
+import currentUser from "../../../context/userContext"
 
 interface IncomingProps {
+    CurrentUser: any,
     show: boolean,
     setShow: any,
     user: any,
-    setSelectedUser: any
+    setSelectedUser: any,
+    unfriend: any
 }
 
-const unFriendModal: React.FC<IncomingProps> = ({show, setShow, user, setSelectedUser}) => {
-
+const unFriendModal: React.FC<IncomingProps> = ({CurrentUser, show, setShow, user, setSelectedUser, unfriend}) => {
     const handleClose = () => {
         setShow(false)
         setTimeout(() => {
             setSelectedUser(null)
         }, 300);
+    }
+
+    const handleUnfriendUser = async () => {
+        let request = await unfriendUser(CurrentUser, user)
+        // Adjust friend list in dashboard
+        if (request === "SUCCESS") {
+            unfriend();
+        }
+        setTimeout(() => {
+            setShow(false)
+        })
     }
 
     return (
@@ -40,7 +54,7 @@ const unFriendModal: React.FC<IncomingProps> = ({show, setShow, user, setSelecte
                             <Fragment>
                                 <div className="unfriend-preview">
                                     <div className="identifier">
-                                        <div style={getPreferredColor(user.preferredColor)} className="avatar">
+                                        <div style={getPreferredColor(user.backgroundColor)} className="avatar">
                                             <i className="fas fa-user"></i>
                                         </div>
                                         <div className="two-tier">
@@ -58,7 +72,7 @@ const unFriendModal: React.FC<IncomingProps> = ({show, setShow, user, setSelecte
                     <Button className="cancel" onClick={handleClose}>
                         Cancel
                     </Button>
-                    <Button className="unfriend">Unfriend</Button>
+                    <Button className="unfriend" onClick={() => handleUnfriendUser()}>Unfriend</Button>
                 </Modal.Footer>
             </Modal>
         </Fragment>

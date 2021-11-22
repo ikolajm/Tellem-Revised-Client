@@ -1,35 +1,44 @@
 import getPreferredColor from '../../../helpers/dashboard/getColor';
 import { Modal, Button } from 'react-bootstrap';
-import { Fragment, useState, useContext } from 'react';
+import { Fragment, useState, useContext, useEffect } from 'react';
 import UserContext from "../../../context/userContext";
 import AuthInput from "../../../reusable_components/form/Auth_Input";
 import data from "../../../helpers/data/data";
 import { toast } from 'react-toastify';
+import  getFriends from "../../../helpers/dashboard/friends/getFriends";
+import addUserToChat from "../../../helpers/dashboard/conversation/addUserToChat";
 
 interface IncomingProps {
     show: boolean,
     setShowAddUsers: any,
-    conversation: any
+    conversationDetails: any,
+    conversationUsers: any,
+    setConversationUsers: any
 }
 
-const AddUsersToChatModal: React.FC<IncomingProps> = ({show, setShowAddUsers, conversation}) => {
-    const setFriendList: any = (friends: any) => {
-        let arr = [];
-        let currentUserUuids = conversation.users.map((user: any) => {
-            return user.uuid;
-        });
-        // console.log(currentUserUuids)
-        arr = friends.filter((friend: any) => {
-            if (!currentUserUuids.includes(friend.uuid)) {
-                return friend;
-            }
-        })
-        return arr
-    }
-    const [friends, setFriends] = useState(setFriendList(data.friendsOfJake));
+const AddUsersToChatModal: React.FC<IncomingProps> = ({show, setShowAddUsers, conversationDetails, conversationUsers, setConversationUsers}) => {
+    const CurrentUser = useContext(UserContext);
+    const [users,  setUsers] = useState(conversationUsers);
+    const [friends, setFriends] = useState([]);
     const [selectedUsers, setSelectedUsers] = useState([]);
     const [filter, setFilter] = useState('');
     const [sortedFriends, setSortedFriends]: any = useState([]);
+
+    // Get the friends of the user
+    useEffect(() => {
+        const friends = async () => {
+            let request = await getFriends(CurrentUser);
+            let convoUserIds = users.map((user: any) => user.id);
+            // Get the request and filter out users already present in chat
+            request = request.filter((friend: any) => {
+                return !convoUserIds.includes(friend.id);
+            })
+            setFriends(request);
+            setSortedFriends(request);
+        }
+
+        friends()
+    }, [])
     
     const handleClose = () => {
         setShowAddUsers(false);
@@ -46,21 +55,20 @@ const AddUsersToChatModal: React.FC<IncomingProps> = ({show, setShowAddUsers, co
         setSortedFriends(filtered)
     }
 
-    const checkCheckedStatus: any = (friendUuid: string) => {
-        let arr: string[] = [...selectedUsers];
+    const checkCheckedStatus: any = (friendId: number) => {
+        let arr: number[] = [...selectedUsers];
         arr = arr.map((user:any) => {
-            return user.uuid
+            return user.id
         });
-        return arr.includes(friendUuid) ? "checked" : ""
+        return arr.includes(friendId) ? "checked" : ""
     }
 
     const toggleSelected = (friend: any) => {
-        const friendUuid = friend.uuid;
-        const index = selectedUsers.findIndex((user:any) => user.uuid === friendUuid);
-        // console.log(friendUuid, selected, index)
+        const friendId = friend.id;
+        const index = selectedUsers.findIndex((user:any) => user.id === friendId);
         // Add user id and push the user model to In chat feedback
         if (index === -1) {
-            if (selectedUsers.length < (5 - conversation.users.length)) {
+            if (selectedUsers.length < (5 - conversationUsers.length)) {
                 let userArr: any = [...selectedUsers];
                 userArr.push(friend);
                 setSelectedUsers(userArr);
@@ -72,6 +80,24 @@ const AddUsersToChatModal: React.FC<IncomingProps> = ({show, setShowAddUsers, co
             let userArr = [...selectedUsers];
             userArr.splice(index, 1);
             setSelectedUsers(userArr);
+        }
+    }
+
+    const handleUserAddition = async () => {
+        const conversationId = conversationDetails.id;
+        let users = selectedUsers;
+        let userIds = users.map((user: any) => user.id);
+        console.log(userIds)
+        if (userIds.length >= 1) {
+            let request = await addUserToChat(CurrentUser, conversationId, userIds);
+            if (request.status === "SUCCESS") {
+                let temp = [...conversationUsers];
+                temp = temp.concat(request.users);
+                setConversationUsers(temp);
+                handleClose();
+            }
+        } else {
+            toast.error('You must have a user selected to submit a request');
         }
     }
 
@@ -89,7 +115,7 @@ const AddUsersToChatModal: React.FC<IncomingProps> = ({show, setShowAddUsers, co
                     <Modal.Title>
                         <div className="two-tier">
                             <h1>Add Users to Chat</h1>
-                            <span>{5 - (conversation.users.length + selectedUsers.length)} slots remain</span>
+                            <span>{5 - (conversationUsers.length + selectedUsers.length)} slots remain</span>
                         </div>
                     </Modal.Title>
                 </Modal.Header>
@@ -100,7 +126,7 @@ const AddUsersToChatModal: React.FC<IncomingProps> = ({show, setShowAddUsers, co
                         <div className="selected-users">
                             {/* Previously added, not editable */}
                             {
-                                conversation.users.map((user: any, index: number) => {
+                                conversationUsers.map((user: any, index: number) => {
                                     return (
                                         <div key={index} className="added-user">
                                             <div className="identifier">
@@ -155,7 +181,7 @@ const AddUsersToChatModal: React.FC<IncomingProps> = ({show, setShowAddUsers, co
                                                     <div key={index} className="selectable">
                                                         {/* Avatar and name */}
                                                         <div className="identifier">
-                                                            <div style={getPreferredColor(friend.preferredColor)} className="avatar">
+                                                            <div style={getPreferredColor(friend.backgroundColor)} className="avatar">
                                                                 <i className="fas fa-user"></i>
                                                             </div>
                                                             <div className="two-tier">
@@ -165,7 +191,7 @@ const AddUsersToChatModal: React.FC<IncomingProps> = ({show, setShowAddUsers, co
                                                         </div>
                                                         {/* Select */}
                                                         <div className="select">
-                                                            <input type="checkbox" checked={checkCheckedStatus(friend.uuid)} />
+                                                            <input type="checkbox" checked={checkCheckedStatus(friend.id)} />
                                                             <span onClick={() => toggleSelected(friend)} className="checkmark">
                                                                 <i className="fas fa-check"></i>
                                                             </span>
@@ -190,7 +216,7 @@ const AddUsersToChatModal: React.FC<IncomingProps> = ({show, setShowAddUsers, co
                                                             <div key={index} className="selectable">
                                                                 {/* Avatar and name */}
                                                                 <div className="identifier">
-                                                                    <div style={getPreferredColor(friend.preferredColor)} className="avatar">
+                                                                    <div style={getPreferredColor(friend.backgroundColor)} className="avatar">
                                                                         <i className="fas fa-user"></i>
                                                                     </div>
                                                                     <div className="two-tier">
@@ -200,7 +226,7 @@ const AddUsersToChatModal: React.FC<IncomingProps> = ({show, setShowAddUsers, co
                                                                 </div>
                                                                 {/* Select */}
                                                                 <div className="select">
-                                                                    <input type="checkbox" checked={checkCheckedStatus(friend.uuid)} />
+                                                                    <input type="checkbox" checked={checkCheckedStatus(friend.id)} />
                                                                     <span onClick={() => toggleSelected(friend)} className="checkmark">
                                                                         <i className="fas fa-check"></i>
                                                                     </span>
@@ -219,7 +245,7 @@ const AddUsersToChatModal: React.FC<IncomingProps> = ({show, setShowAddUsers, co
                     <Button className="cancel" onClick={handleClose}>
                         Cancel
                     </Button>
-                    <Button className="save">Add Users</Button>
+                    <Button onClick={handleUserAddition} className="save">Add Users</Button>
                 </Modal.Footer>
             </Modal>
         </Fragment>

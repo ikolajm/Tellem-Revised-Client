@@ -1,6 +1,6 @@
 import getPreferredColor from '../../../helpers/dashboard/getColor';
 import { Modal, Button } from 'react-bootstrap';
-import { Fragment } from 'react';
+import { Fragment, useState } from 'react';
 
 interface IncomingProps {
     show: boolean,
@@ -11,10 +11,13 @@ interface IncomingProps {
     sortedFriends: any[],
     checkCheckedStatus: any,
     toggleSelected: any,
-    friends: any[]
+    friends: any[],
+    handleCreateConversation: any
 }
 
-const CreateConversationModal: React.FC<IncomingProps> = ({show, handleClose, selected, setFilteredFriends, filter, sortedFriends, checkCheckedStatus, toggleSelected, friends}) => {
+const CreateConversationModal: React.FC<IncomingProps> = ({show, handleClose, selected, setFilteredFriends, filter, sortedFriends, checkCheckedStatus, toggleSelected, friends, handleCreateConversation}) => {
+    const [messageContent, setMessageContent] = useState('');
+    
     return (
         <Fragment>
             <Modal
@@ -26,7 +29,7 @@ const CreateConversationModal: React.FC<IncomingProps> = ({show, handleClose, se
             >
                 <Modal.Header>
                     <Modal.Title>
-                        <div className="two-tiered">
+                        <div className="two-tier">
                             <h1 className="">Add friends</h1>
                             <span>You can add {5 - selected.length} more friends</span>
                         </div>
@@ -54,7 +57,7 @@ const CreateConversationModal: React.FC<IncomingProps> = ({show, handleClose, se
                                                     <div key={index} className="selectable">
                                                         {/* Avatar and name */}
                                                         <div className="identifier">
-                                                            <div style={getPreferredColor(friend.preferredColor)} className="avatar">
+                                                            <div style={getPreferredColor(friend.backgroundColor)} className="avatar">
                                                                 <i className="fas fa-user"></i>
                                                             </div>
                                                             <div className="two-tier">
@@ -64,8 +67,8 @@ const CreateConversationModal: React.FC<IncomingProps> = ({show, handleClose, se
                                                         </div>
                                                         {/* Select */}
                                                         <div className="select">
-                                                            <input type="checkbox" checked={checkCheckedStatus(friend.uuid)} />
-                                                            <span onClick={() => toggleSelected(friend.uuid)} className="checkmark">
+                                                            <input type="checkbox" checked={checkCheckedStatus(friend.id)} />
+                                                            <span onClick={() => toggleSelected(friend.id)} className="checkmark">
                                                                 <i className="fas fa-check"></i>
                                                             </span>
                                                         </div>
@@ -89,7 +92,7 @@ const CreateConversationModal: React.FC<IncomingProps> = ({show, handleClose, se
                                                             <div key={index} className="selectable">
                                                                 {/* Avatar and name */}
                                                                 <div className="identifier">
-                                                                    <div style={getPreferredColor(friend.preferredColor)} className="avatar">
+                                                                    <div style={getPreferredColor(friend.backgroundColor)} className="avatar">
                                                                         <i className="fas fa-user"></i>
                                                                     </div>
                                                                     <div className="two-tier">
@@ -99,8 +102,8 @@ const CreateConversationModal: React.FC<IncomingProps> = ({show, handleClose, se
                                                                 </div>
                                                                 {/* Select */}
                                                                 <div className="select">
-                                                                    <input type="checkbox" checked={checkCheckedStatus(friend.uuid)} />
-                                                                    <span onClick={() => toggleSelected(friend.uuid)} className="checkmark">
+                                                                    <input type="checkbox" checked={checkCheckedStatus(friend.id)} />
+                                                                    <span onClick={() => toggleSelected(friend.id)} className="checkmark">
                                                                         <i className="fas fa-check"></i>
                                                                     </span>
                                                                 </div>
@@ -113,12 +116,16 @@ const CreateConversationModal: React.FC<IncomingProps> = ({show, handleClose, se
                                 </Fragment>
                             }
                         </div>
+                        <div className="message">
+                            <label htmlFor="textarea">Open with a message:</label>
+                            <textarea placeholder="Type your message here" id="textarea" onChange={(e) => setMessageContent(e.target.value)} value={messageContent} rows={2}></textarea>
+                        </div>
                 </Modal.Body>
                 <Modal.Footer>
                     <Button className="cancel" onClick={handleClose}>
                         Cancel
                     </Button>
-                    <Button variant="primary">Say Hi!</Button>
+                    <Button onClick={() => handleCreateConversation(messageContent)} variant="primary">Say Hi!</Button>
                 </Modal.Footer>
             </Modal>
         </Fragment>

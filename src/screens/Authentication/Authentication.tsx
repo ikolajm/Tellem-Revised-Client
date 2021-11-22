@@ -4,6 +4,7 @@ import login from "../../helpers/authentication/login";
 import signup from "../../helpers/authentication/signup";
 import UserUpdateContext from "../../context/UserUpdateContext";
 import UserContext from "../../context/userContext";
+import checkToken from "../../helpers/authentication/checktoken";
 import { Redirect } from "react-router";
 
 export default () => {
@@ -13,7 +14,9 @@ export default () => {
     const [confirmPassword, setConfirmPassword] = useState("");
     const setUserFunc = useContext(UserUpdateContext);
     const CurrentUser = useContext(UserContext);
-    if (CurrentUser && CurrentUser.token !== null) return <Redirect to="/dashboard/messages"></Redirect>
+    if (CurrentUser && (CurrentUser.uuid && CurrentUser.token)) {
+        return <Redirect to="/" />
+    }
 
     const toggleView = (e: any, str: string) => {
         e.preventDefault();

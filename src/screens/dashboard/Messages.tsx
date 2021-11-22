@@ -1,4 +1,4 @@
-import {useState, Fragment} from 'react';
+import {useState, Fragment, useContext, useEffect} from 'react';
 import MessageList from './MessageList';
 import ArchiveList from './ArchiveList';
 import { Modal, Button } from 'react-bootstrap';
@@ -6,13 +6,19 @@ import data from '../../helpers/data/data';
 import getPreferredColor from '../../helpers/dashboard/getColor';
 import CreateConversation from './modals/CreateConversation';
 import { toast } from 'react-toastify';
+import UserContext from '../../context/userContext';
+import {useHistory} from 'react-router-dom';
+import createChat from '../../helpers/dashboard/messages/createChat';
+import getFriends from "../../helpers/dashboard/friends/getFriends";
 
 export default () => {
+    const history = useHistory();
+    const CurrentUser = useContext(UserContext);
     const [director, setDirector] = useState('messages')
     // Create Conversation
     const [filter, setFilter] = useState('')
-    const [friends, setFriends] = useState(data.friendsOfJake)
-    const [sortedFriends, setSortedFriends] = useState(data.friendsOfJake);
+    const [friends, setFriends] = useState([])
+    const [sortedFriends, setSortedFriends] = useState([]);
     const [selected, setSelected] = useState([]);
     // Modal
     const [show, setShow] = useState(false);
@@ -26,9 +32,20 @@ export default () => {
         }, 300)
     }
 
+    // Get the friends of the user
+    useEffect(() => {
+        const friends = async () => {
+            let request = await getFriends(CurrentUser);
+            setFriends(request);
+            setSortedFriends(request)
+        }
+
+        friends()
+    }, [])
+
     const setFilteredFriends = (value: string) => {
         setFilter(value);
-        const filtered = friends.filter(friend => friend.username.toLowerCase().includes(value.toLowerCase()));
+        const filtered = friends.filter((friend:any) => friend.username.toLowerCase().includes(value.toLowerCase()));
         setSortedFriends(filtered)
     }
 
@@ -68,6 +85,16 @@ export default () => {
         }
     }
 
+    const handleCreateConversationClick = async (content: any) => {
+        let query = await createChat(CurrentUser, selected, content);
+        if (query.status === "SUCCESS") {
+            let id = query.conversationId;
+            handleClose()
+            // On success direct user to the messages screen
+            history.push(`/dashboard/messages/${id.toString()}`);
+        }
+    }
+
     return (
         <div className="messages-container">
             <div className="messages">
@@ -101,6 +128,7 @@ export default () => {
                 checkCheckedStatus={checkCheckedStatus}
                 toggleSelected={toggleSelected}
                 friends={friends}
+                handleCreateConversation={handleCreateConversationClick}
             />
         </div>
     )

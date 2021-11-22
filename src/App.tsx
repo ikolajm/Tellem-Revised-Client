@@ -8,20 +8,23 @@ import UserContext from './context/userContext';
 import UserUpdateContext from './context/UserUpdateContext';
 import DashboardRouter from './screens/dashboard/Router';
 import LoggedInUser from './interfaces/authUser';
+import checktoken from './helpers/authentication/checktoken';
 
 export default withRouter(() => {
   // Authorized user for react context
   const [CurrentUser, setCurrentUser] = useState<LoggedInUser>({
-      username: "JakeIkola",
-      email: "ikolajm@gmail.com",
-      uuid: "a1",
-      picture: null,
-      profileBackground: "blue",
-      token: 'abc123',
-      idCode: 12445
+      username: "",
+      email: "",
+      uuid: "",
+      backgroundColor: "",
+      token: null,
+      idCode: null
   });
 
-  console.log(CurrentUser)
+  if (localStorage.getItem('token') !== null && !CurrentUser.token) {
+    checktoken(setCurrentUser);
+  }
+
   return (
       <UserContext.Provider value={CurrentUser}>
         <UserUpdateContext.Provider value={setCurrentUser}>

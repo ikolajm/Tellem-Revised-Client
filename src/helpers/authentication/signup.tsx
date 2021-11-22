@@ -1,5 +1,5 @@
-// import axios from "axios";
-// import APIURL from "../environment/apirouter";
+import axios from "axios";
+import APIURL from "../environment/urlSwitch";
 import { toast } from 'react-toastify';
 
 interface SignupFormDetails {
@@ -24,27 +24,26 @@ export default async (e:any, formDetails: SignupFormDetails, setUserFunc: any) =
         return toast.error("Please make sure your passwords match!")
     }
 
-    // let request = await axios.post(
-        // URL
-        // `${APIURL}/user/signin`, 
-        // BODY
-        // { email, password },
-        // HEADERS
-    //     {
-    //         headers: {
-    //             "Content-Type": "application/json"
-    //         }
-    //     }
-    // );
-    // request = request.data
-    // let user = request.user
+    let request = await axios.post(
+        `${APIURL}/user/create`,
+        { username, email, password },
+        {
+            headers: {
+                "Content-Type": "application/json"
+            }
+        }
+    )
+    let data = request.data;
     
-    // If error return error
-    // toast.error("An error occurred, " + err.message)
-
-    toast.success("Welcome to Tellem!");
-    setTimeout(() => {
-        // Set token
-        // setUser(user)
-    }, 500)
+    if (data && data.user) {
+        let loggedInUser = data.user;
+        loggedInUser.token = data.sessionToken;
+        toast.success("Successfully signed up!");
+        localStorage.setItem('token', data.sessionToken);
+        setTimeout(() => {
+            setUserFunc(loggedInUser);
+        }, 300)
+    } else {
+        toast.error(data.message)
+    }
 }

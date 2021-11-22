@@ -5,10 +5,13 @@ import AuthInput from "../../reusable_components/form/Auth_Input";
 import {toast} from 'react-toastify';
 import { Button, Modal } from 'react-bootstrap';
 import EditPassword from '../dashboard/modals/EditPassword';
+import editUserInfo from "../../helpers/dashboard/profile/editUser";
+import UserUpdateContext from "../../context/UserUpdateContext";
 
 export default () => {
     const CurrentUser = useContext(UserContext);
-    const [preferredColor, setPreferredColor] = useState(CurrentUser?.profileBackground!);
+    const setUserFunc = useContext(UserUpdateContext);
+    const [preferredColor, setPreferredColor] = useState(CurrentUser?.backgroundColor!);
     const [idCode, setIdCode] = useState(CurrentUser?.idCode!)
     const [username, setUsername] = useState(CurrentUser?.username!);
     const [email, setEmail] = useState(CurrentUser?.email!);
@@ -138,12 +141,13 @@ export default () => {
                 {/* Save prompt */}
                 <div className="save-prompt">
                     <span>Don't forget to save your changes!</span>
-                    <button>Save Changes</button>
+                    <button onClick={() => editUserInfo(CurrentUser, setUserFunc, username, email, idCode, preferredColor)}>Save Changes</button>
                 </div>
             </div>
 
             {/* Edit password modal */}
-            <EditPassword 
+            <EditPassword
+                CurrentUser={CurrentUser}
                 show={show}
                 handleClose={() => handleClose()}
                 password={password}

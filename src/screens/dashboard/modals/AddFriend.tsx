@@ -1,8 +1,11 @@
 import { AnyAaaaRecord } from "dns";
-import { Fragment, useState } from "react"
+import { Fragment, useContext, useState } from "react"
 import { Modal, Button } from "react-bootstrap"
 import getPreferredColor from '../../../helpers/dashboard/getColor';
 import data from '../../../helpers/data/data';
+import userSearch from "../../../helpers/dashboard/friends/searchUser";
+import userContext from "../../../context/userContext";
+import createFriendRequest from "../../../helpers/dashboard/friends/createFriendRequest";
 
 interface IncomingProps {
     show: boolean,
@@ -12,8 +15,11 @@ interface IncomingProps {
 const AddFriendModal: React.FC<IncomingProps> = ({show, setShow}) => {
     const [search, setSearch] = useState('');
     // const [searchResults, setSearchResults] = useState([]);
-    const [searchResults, setSearchResults]: any = useState(data.friendsOfJake)
+    const [searchResults, setSearchResults]: any = useState([]);
+    const [searchPending, setSearchPending]: any = useState([]);
+    const [searchFriends, setSearchFriends]: any = useState([]);
     const [searchSubmitted, setSearchSubmitted] = useState(true);
+    const CurrentUser = useContext(userContext)
 
     const handleClose = () => {
         setShow(false)
@@ -21,7 +27,26 @@ const AddFriendModal: React.FC<IncomingProps> = ({show, setShow}) => {
             setSearch('');
             setSearchSubmitted(false);
             setSearchResults([]);
+            setSearchPending([]);
+            setSearchFriends([]);
         }, 300);
+    }
+
+    const handleSearch = async () =>{
+        let query: any = await userSearch(CurrentUser, search);
+        console.log(query)
+        setSearchResults(query.searchResults);
+        setSearchPending(query.pending);
+        setSearchFriends(query.friendIds);
+    }
+
+    const handleAddFriend = async (userUuid: string, userId: number) => {
+        let query: any = await createFriendRequest(CurrentUser, userUuid, userId);
+        if (query === "SUCCESS") {
+            let arr = [...searchPending];
+            arr.push(userId);
+            setSearchPending(arr);
+        }
     }
 
     return (
@@ -44,7 +69,7 @@ const AddFriendModal: React.FC<IncomingProps> = ({show, setShow}) => {
                 <Modal.Body>
                     <div className="search">
                         <input placeholder="Search by username" type="text" onChange={(e) => setSearch(e.target.value)} value={search} />
-                        <Button>
+                        <Button onClick={handleSearch}>
                             <i className="fas fa-search"></i>
                         </Button>
                     </div>
@@ -66,7 +91,7 @@ const AddFriendModal: React.FC<IncomingProps> = ({show, setShow}) => {
                                                     <div key={index} className="selectable">
                                                         {/* Avatar and name */}
                                                         <div className="identifier">
-                                                            <div style={getPreferredColor(user.preferredColor)} className="avatar">
+                                                            <div style={getPreferredColor(user.backgroundColor)} className="avatar">
                                                                 <i className="fas fa-user"></i>
                                                             </div>
                                                             <div className="two-tier">
@@ -76,10 +101,22 @@ const AddFriendModal: React.FC<IncomingProps> = ({show, setShow}) => {
                                                         </div>
                                                         {/* Action */}
                                                         <div className="action-buttons">
-                                                            <button className="add-friend">
-                                                                <i className="fas fa-user-plus"></i>
-                                                                {/* <i className="fas fa-user-check"></i> */}
-                                                            </button>
+                                                            {
+                                                                // If the user is already friends with a result
+                                                                searchFriends.includes(user.id) ?
+                                                                    <button disabled={true} className="accepted">
+                                                                        {/* <i className="fas fa-user-plus"></i> */}
+                                                                        <i className="fas fa-user-check"></i>
+                                                                    </button> :
+                                                                    // If one of the users needs to take action with a request
+                                                                            searchPending.includes(user.id) ?
+                                                                                <button disabled={true} className="waiting">
+                                                                                    <i className="fas fa-clock"></i>
+                                                                                </button>:
+                                                                                <button onClick={() => handleAddFriend(user.uuid, user.id)} disabled={false} className="add-friend">
+                                                                                    <i className="fas fa-user-plus"></i>
+                                                                                </button>
+                                                            }
                                                         </div>
                                                     </div>
                                                 )

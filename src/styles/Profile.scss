@@ -158,9 +158,11 @@
             }
     
             .edit-password {
-                margin-right: 0rem !important;
                 display: flex;
                 justify-content: flex-end;
+                button {
+                    margin: 0rem !important;
+                }
             }
         }
 
@@ -176,6 +178,7 @@
             button {
                 background: $success !important;
                 border: none !important;
+                margin: 0rem !important;
 
                 &:hover {
                     background: $success-2 !important;

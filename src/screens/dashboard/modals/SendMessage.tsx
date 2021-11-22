@@ -1,6 +1,9 @@
-import { Fragment, useState } from "react"
+import { Fragment, useState, useContext } from "react";
+import CurrentUserContext from "../../../context/userContext";
 import { Modal, Button } from "react-bootstrap"
+import messageFriend from "../../../helpers/dashboard/friends/messageFriend";
 import getPreferredColor from '../../../helpers/dashboard/getColor';
+import { useHistory } from "react-router-dom";
 
 interface IncomingProps {
     show: boolean,
@@ -11,12 +14,24 @@ interface IncomingProps {
 
 const SendMessageModal: React.FC<IncomingProps> = ({show, setShow, user, setSelectedUser}) => {
     const [messageContent, setMessageContent] = useState('');
+    let CurrentUser = useContext(CurrentUserContext);
+    const history = useHistory();
 
     const handleClose = () => {
         setShow(false)
         setTimeout(() => {
             setSelectedUser(null)
+            setMessageContent('');
         }, 300);
+    }
+
+    const handleSendMessage = async () => {
+        // Get request
+        let request = await messageFriend(CurrentUser, [user.id], messageContent);
+        let id = request.conversationId;
+        handleClose()
+        // On success direct user to the messages screen
+        history.push(`/dashboard/messages/${id.toString()}`);
     }
 
     return (
@@ -41,7 +56,7 @@ const SendMessageModal: React.FC<IncomingProps> = ({show, setShow, user, setSele
                                 {/* User preview */}
                                 <div className="user">
                                     <div className="identifier">
-                                        <div style={getPreferredColor(user.preferredColor)} className="avatar">
+                                        <div style={getPreferredColor(user.backgroundColor)} className="avatar">
                                             <i className="fas fa-user"></i>
                                         </div>
                                         <div className="two-tier">
@@ -62,7 +77,7 @@ const SendMessageModal: React.FC<IncomingProps> = ({show, setShow, user, setSele
                     <Button className="cancel" onClick={handleClose}>
                         Cancel
                     </Button>
-                    <Button className="send-message">Send Message</Button>
+                    <Button  onClick={() => handleSendMessage()} className="send-message">Send Message</Button>
                 </Modal.Footer>
             </Modal>
         </Fragment>
