@@ -17,6 +17,7 @@ const ChatDetails: React.FC<IncomingProps> = ({show, setShowChatDetails, convers
     const [backgroundColor, setBackgroundColor] = useState(conversationDetails.backgroundColor);
     const [name, setName] = useState(conversationDetails.name);
     const CurrentUser = useContext(UserContext);
+    console.log(conversationDetails, conversationUsers)
 
     const checkColorSelection = (color:string) => {
         if(color === backgroundColor) {
@@ -79,7 +80,7 @@ const ChatDetails: React.FC<IncomingProps> = ({show, setShowChatDetails, convers
                                                         {
                                                             conversationUsers.filter((user: any) => {
                                                                 return user.uuid !== CurrentUser?.uuid
-                                                            })[0]
+                                                            })[0].username
                                                         }
                                                     </Fragment>
                                             }

@@ -49,7 +49,7 @@ export default withRouter(() => {
               draggable={false}
               transition={Zoom}
               limit={1}
-              autoClose={3000}
+              autoClose={2000}
             />
           </div>
         </UserUpdateContext.Provider>

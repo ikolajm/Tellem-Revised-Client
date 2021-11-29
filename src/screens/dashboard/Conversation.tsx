@@ -60,7 +60,7 @@ export default () => {
 
     const scrollToBottom = () => {
         const feed: any = document.querySelector('#feed');
-        console.log(feed)
+        // console.log(feed)
         if (feed !== null && feed.scrollTop !== null && feed.scrollHeight !== null) {
             feed.classList.remove('sticky-bottom')
             feed.scrollTop = feed.scrollHeight;

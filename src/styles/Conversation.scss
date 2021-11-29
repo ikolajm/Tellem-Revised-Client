@@ -85,7 +85,7 @@
 
         .message-feed {
             position: relative;
-            height: calc(100vh - 75px - 90px - 2rem - 40px - 1rem) !important;
+            height: calc(100vh - 75px - 90px - 2rem);
             overflow-y: scroll;
             flex-direction: column;
             display: flex;
