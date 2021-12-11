@@ -58,10 +58,10 @@ const CreateConversationModal: React.FC<IncomingProps> = ({CurrentUser, show, ha
                     />
                 </Modal.Body>
                 <Modal.Footer>
-                <Button className="cancel" onClick={handleClose}>
+                <Button id="cancelButton" className="cancel" onClick={handleClose}>
                     Cancel
                 </Button>
-                <Button className="save-password" onClick={() => editPassword(CurrentUser, password, newPassword, confirmNewPassword)}>Save Changes</Button>
+                <Button id="saveButton" className="save-password" onClick={() => editPassword(CurrentUser, password, newPassword, confirmNewPassword)}>Save Changes</Button>
                 </Modal.Footer>
             </Modal>
         </Fragment>

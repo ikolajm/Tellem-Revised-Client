@@ -17,7 +17,8 @@ export default async (CurrentUser: any, password: string, newPassword: string, c
         `${APIURL}/user/update/${CurrentUser.uuid}/password`,
         {
             password: password.trim(),
-            newPassword: newPassword.trim()
+            newPassword: newPassword.trim(),
+            confirmNewPassword: confirmNewPassword.trim()
         },
         {
             headers: {
@@ -30,7 +31,7 @@ export default async (CurrentUser: any, password: string, newPassword: string, c
     if (request.status === "SUCCESS") {
         toast.success('Password successfully updated!');
     } else {
-        toast.error(`${request.err}`);
+        toast.error(`${request.message}`);
     }
 }
 

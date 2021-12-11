@@ -80,7 +80,7 @@ export default () => {
                                     value={password}
                                 />
                                 <div className="button-container">
-                                    <button type="submit" className="btn btn-primary submitBtn" onClick={(e) => login(
+                                    <button id="loginSubmit" type="submit" className="btn btn-primary submitBtn" onClick={(e) => login(
                                         e,
                                         {
                                             email,
@@ -90,7 +90,7 @@ export default () => {
                                     )
                                     }>Submit</button>
                                     <div className="text-button">
-                                        <button onClick={(e) => toggleView(e, "SIGNUP")}>I don't have an account</button>
+                                        <button id="signupToggle" onClick={(e) => toggleView(e, "SIGNUP")}>I don't have an account</button>
                                     </div>
                                 </div>
                             </form>
@@ -140,7 +140,7 @@ export default () => {
                                         setUserFunc
                                     )}>Submit</button>
                                     <div className="text-button">
-                                        <button onClick={(e) => toggleView(e, "LOGIN")}>I have an account already</button>
+                                        <button id="loginToggle" onClick={(e) => toggleView(e, "LOGIN")}>I have an account already</button>
                                     </div>
                                 </div>
                             </form>

@@ -29,15 +29,15 @@ export default () => {
                     <i className="fas fa-exchange-alt"></i>
                 </button>
                 {/* Messages */}
-                <NavLink to="/dashboard/messages" activeClassName="active" className="nav-icon">
+                <NavLink id="messageRoute" to="/dashboard/messages" activeClassName="active" className="nav-icon">
                     <i className="fas fa-envelope-open-text"></i>
                 </NavLink>
                 {/* Friends */}
-                <NavLink to="/dashboard/friends" activeClassName="active" className="nav-icon">
+                <NavLink id="friendsRoute" to="/dashboard/friends" activeClassName="active" className="nav-icon">
                     <i className="fas fa-user-friends"></i>
                 </NavLink>
                 {/* Profile */}
-                <NavLink to="/dashboard/profile" activeClassName="active" className="nav-icon">
+                <NavLink id="profileRoute" to="/dashboard/profile" activeClassName="active" className="nav-icon">
                     <i className="fas fa-id-card"></i>
                 </NavLink>
                 {/* <button className="nav-icon">
